@@ -1,45 +1,161 @@
-# 📷 Classificador de Imagens em Tempo Real com PyTorch (ResNet50)
+# 📸 Classificador de Imagens em Tempo Real com PyTorch
 
-Este projeto consiste em uma Inteligência Artificial capaz de classificar imagens em tempo real utilizando a arquitetura **ResNet50** com a técnica de **Transfer Learning**.
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python)
+![PyTorch](https://img.shields.io/badge/PyTorch-ResNet50-orange?logo=pytorch)
+![PyTorch](https://img.shields.io/badge/PyTorch-v2.7.1%2Bcu118-orange?logo=pytorch)
 
-O sistema foi treinado para identificar três classes específicas: **Cachorros, Gatos e Pessoas**, podendo realizar a inferência via Webcam, Câmeras IP (celular) ou imagens estáticas.
+
+Este projeto implementa uma Inteligência Artificial capaz de classificar imagens em tempo real utilizando a arquitetura **ResNet50** com a técnica de **Transfer Learning**. O modelo foi treinado para diferenciar **Cachorros, Gatos e Pessoas**, suportando inferência via Webcam, Câmeras IP ou arquivos estáticos.
+
+---
+
+## 📑 Índice
+1. [Funcionalidades](#-funcionalidades)
+2. [Tecnologias](#-tecnologias-utilizadas)
+3. [Instalação](#-instalação)
+4. [Configuração do Dataset (Kaggle)](#-configuração-do-dataset-kaggle)
+5. [Como Usar](#-como-usar)
+6. [Estrutura do Projeto](#-estrutura-do-projeto)
+
+---
 
 ## 🚀 Funcionalidades
 
-- **Treinamento Personalizado:** Script robusto de *fine-tuning* que congela as camadas convolucionais da ResNet50 e treina apenas a camada final.
-- **Detecção em Tempo Real:** Suporte para inferência via Webcam e Câmeras IP (ex: DroidCam, IP Webcam).
-- **Processamento Otimizado:** O código detecta automaticamente se há uma GPU NVIDIA (CUDA) disponível para acelerar tanto o treino quanto a inferência.
-- **Data Augmentation:** O pipeline de treino inclui rotação, espelhamento e ajuste de cor para aumentar a generalização do modelo.
+* **🧠 Transfer Learning:** Utiliza a ResNet50 pré-treinada na ImageNet, congelando camadas convolucionais e treinando apenas o classificador final (*fine-tuning*).
+* **⚡ Alta Performance:** Detecção automática de GPU NVIDIA (CUDA) para aceleração de treino e inferência.
+* **📹 Múltiplas Entradas:** Suporte nativo para Webcam local, Câmeras IP (celular via Wi-Fi) e imagens estáticas.
+* **🔄 Data Augmentation:** Pipeline robusto com rotação, espelhamento e ajuste de cor para evitar *overfitting*.
 
-## 📦 Instalação
-
-Recomendamos o uso do **Miniconda** ou **Anaconda** para gerenciar o ambiente.
+---
 
 ## 🛠️ Tecnologias Utilizadas
 
-* **Python 3.10+**
-* **PyTorch & Torchvision:** Framework de Deep Learning.
-* **OpenCV:** Manipulação de vídeo e interface visual.
-* **Pillow (PIL):** Processamento de imagens.
-* **ResNet50:** Arquitetura de rede neural convolucional (CNN) pré-treinada na ImageNet.
+* **Linguagem:** Python 3.10+
+* **Core AI:** PyTorch & Torchvision
+* **Processamento de Imagem:** OpenCV & Pillow (PIL)
+* **Modelo Base:** ResNet50
+
+---
+
+## 🐍 Configuração do Ambiente (Miniconda)
+
+Recomendamos fortemente o uso do **Miniconda** para gerenciar as dependências e evitar conflitos com o Python do sistema.
+
+### 1. Baixar e Instalar
+Baixe o instalador para seu sistema operacional no site oficial:
+* [Miniconda Download (Windows/Mac/Linux)](https://docs.conda.io/en/latest/miniconda.html)
+
+**Dica de Instalação (Windows):**
+Durante a instalação, marque a opção *"Add Miniconda3 to my PATH environment variable"* (embora o instalador diga que não é recomendado, facilita muito para iniciantes rodarem comandos direto no terminal).
+
+### 2. Inicializar (Apenas Linux/Mac)
+Se estiver no Linux ou Mac, abra o terminal após instalar e rode:
+
+    conda init bash
+    # Feche e abra o terminal novamente
+
+### 3. Criar o Ambiente Virtual
+No terminal (ou Anaconda Prompt no Windows), execute os comandos abaixo para criar um ambiente isolado com Python 3.10:
+
+    # Cria o ambiente chamado 'torch-env'
+    conda create -n torch-env python=3.10 -y
+
+    # Ativa o ambiente (Obrigatório antes de rodar o projeto)
+    conda activate torch-env
+
+---
+
+## 📦 Instalação do Projeto
+
+Com o ambiente ativado (`conda activate torch-env`), instale as bibliotecas necessárias:
+
+    pip install -r requirements.txt
+
+---
+
+## 📊 Configuração do Dataset (Kaggle)
+
+Para treinar o modelo, é necessário baixar as imagens. O script espera uma estrutura de pastas específica que pode ser obtida via Kaggle.
+
+### Passo 1: Obter Credenciais (`kaggle.json`)
+1. Acesse sua conta no [Kaggle](https://www.kaggle.com/).
+2. Vá em **Settings** > Seção **API** > Clique em **Create New Token**.
+3. Um arquivo `kaggle.json` será baixado.
+
+### Passo 2: Configurar Autenticação
+Mova o arquivo `kaggle.json` para o local correto:
+
+* **Linux/Mac:**
+    
+    mkdir -p ~/.kaggle
+    mv ~/Downloads/kaggle.json ~/.kaggle/
+    chmod 600 ~/.kaggle/kaggle.json
+
+* **Windows:** Mova para `C:\Users\<SEU_USUARIO>\.kaggle\kaggle.json`.
+
+### Passo 3: Baixar os Dados
+Substitua `usuario/dataset` pelo link do dataset desejado que contenha as classes (Gatos, Cachorros, Pessoas).
+
+    # Instala o cliente API (se ainda não instalou)
+    pip install kaggle
+
+    # Baixa o dataset
+    kaggle datasets download -d nome-do-usuario/nome-do-dataset
+
+    # Descompacte e organize para que fique EXATAMENTE assim:
+    # projeto/
+    # ├── dataset/
+    # │   ├── train/  (imagens de treino)
+    # │   └── val/    (imagens de validação)
+
+---
+
+## 💻 Como Usar
+
+Siga a ordem abaixo para garantir o funcionamento correto.
+
+### 1. Treinamento (`treino.py`)
+Obrigatório na primeira execução. O script lerá as imagens, treinará a IA e salvará o arquivo `.pth`.
+
+    python src/treino.py
+
+> **Nota:** O modelo final será salvo em `modelos/modelo_treinado.pth`.
+
+### 2. Teste com Webcam (`webcam.py`)
+Para classificação em tempo real usando a webcam do PC.
+
+    python src/webcam.py
+
+* **Controles:** Pressione `q` para sair.
+
+### 3. Teste com Câmera IP (`ipcam.py`)
+Para usar a câmera do celular (via apps como *IP Webcam* ou *DroidCam*).
+* *Edite o arquivo `src/ipcam.py` e insira o IP do seu celular na variável `cap`.*
+
+    python src/ipcam.py
+
+### 4. Classificar Foto (`classificar.py`)
+Para testar uma imagem específica salva no disco.
+
+    python src/classificar.py caminho/da/sua_foto.jpg
+
+---
 
 ## 📂 Estrutura do Projeto
 
-A organização dos arquivos segue o padrão abaixo. Certifique-se de manter os scripts na pasta `src` e as imagens/modelos na raiz para que os caminhos funcionem corretamente.
+    projeto/
+    ├── dataset/                  # Imagens (Baixadas/Organizadas)
+    │   ├── train/                # ├── cachorros/ | gatos/ | pessoas/
+    │   └── val/                  # └── cachorros/ | gatos/ | pessoas/
+    ├── modelos/                  # Salva o arquivo .pth aqui
+    ├── src/                      # Scripts Python
+    │   ├── classificar.py        # Inferência estática
+    │   ├── ipcam.py              # Inferência via Wi-Fi
+    │   ├── treino.py             # Script de Fine-Tuning
+    │   └── webcam.py             # Inferência local
+    ├── requirements.txt          # Lista de libs necessárias
+    └── README.md                 # Documentação
 
-```text
-projeto/
-├── dataset/                  # Pasta com as imagens
-│   ├── train/                # Imagens de treinamento
-│   │   ├── cachorros/
-│   │   ├── gatos/
-│   │   └── pessoas/
-│   └── val/                  # Imagens de validação (mesma estrutura)
-├── modelos/                  # Onde o arquivo .pth será salvo automaticamente
-├── src/                      # Código-fonte do projeto
-│   ├── classificar.py        # Teste em imagem estática
-│   ├── ipcam.py              # Teste em câmera via IP/Wi-Fi
-│   ├── treino.py             # Script de treinamento da IA
-│   └── webcam.py             # Teste na webcam local
-├── requirements.txt          # Dependências do projeto
-└── README.md
+---
+
+**Desenvolvido com PyTorch 2.7.1+cu118**
