@@ -1,0 +1,16 @@
+# Pastas de dependências (ex: Node.js)
+node_modules/
+
+# Ambientes virtuais (Python)
+venv/
+env/
+__pycache__/
+
+# Ficheiros de configuração com senhas (MUITO IMPORTANTE)
+.env
+
+# Ficheiros do sistema operativo
+.DS_Store
+
+# Ficheiros de log
+*.log
