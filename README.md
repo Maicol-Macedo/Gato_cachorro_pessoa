@@ -139,11 +139,15 @@ Por padrão, o script usa a câmera principal do sistema (índice `0`). Se for u
 Para usar a câmera do seu smartphone como uma webcam sem fio através do aplicativo **Iriun Webcam**. Diferente de webcams IP baseadas em URL, o Iriun cria uma câmera virtual no sistema operacional do seu PC.
 
 **Passo a Passo (Iriun Webcam):**
-1. Instale o app **Iriun Webcam** no seu celular (Android/iOS) e instale o programa correspondente no seu computador.
-2. Inicie os dois aplicativos com o celular e o computador na mesma rede Wi-Fi. O computador reconhecerá o celular como uma webcam conectada.
-3. Edite o arquivo `src/ipcam.py`. Como o Iriun simula uma webcam física, você deve usar um número inteiro para selecioná-la (geralmente `1`, `2` ou `3`, dependendo de quantas webcams normais você tem instaladas). Altere a linha: `cap = cv2.VideoCapture(1)`
+Instale o app **Iriun Webcam** no seu celular (Android/iOS) e instale o programa correspondente no seu computador.
+Inicie os dois aplicativos com o celular e o computador na mesma rede Wi-Fi. O computador reconhecerá o celular como uma webcam conectada.
+Edite o arquivo `src/ipcam.py`. Como o Iriun simula uma webcam física, você deve usar um número inteiro para selecioná-la (geralmente `1`, `2` ou `3`, dependendo de quantas webcams normais você tem instaladas). Altere a linha: 
 
-    python src/webcam.py
+    cap = cv2.VideoCapture(1)
+
+**Como executar:**
+
+    python src/ipcam.py
 
 * **Controles:** Pressione `q` na janela de vídeo para sair com segurança.
 
