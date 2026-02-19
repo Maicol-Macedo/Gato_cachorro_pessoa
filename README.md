@@ -143,7 +143,7 @@ Para usar a câmera do seu smartphone como uma webcam sem fio através do aplica
 2. Inicie os dois aplicativos com o celular e o computador na mesma rede Wi-Fi. O computador reconhecerá o celular como uma webcam conectada.
 3. Edite o arquivo `src/ipcam.py`. Como o Iriun simula uma webcam física, você deve usar um número inteiro para selecioná-la (geralmente `1`, `2` ou `3`, dependendo de quantas webcams normais você tem instaladas). Altere a linha: `cap = cv2.VideoCapture(1)`
 
-    python src/ipcam.py
+    python src/webcam.py
 
 * **Controles:** Pressione `q` na janela de vídeo para sair com segurança.
 
