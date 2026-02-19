@@ -129,6 +129,7 @@ Por padrão, o script usa a câmera principal do sistema (índice `0`). Se for u
 `cap = cv2.VideoCapture(1)` # ou 2, dependendo da porta USB
 
 **Como executar:**
+
     python src/webcam.py
 
 * **Interface Visual:** Uma barra preta no topo exibe a classe prevista. O texto ficará **Verde** se a confiança da IA for maior que 70%, e **Vermelho** se for menor ou igual.
