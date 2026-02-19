@@ -12,7 +12,7 @@ CAMINHO_MODELO = './modelos/modelo_treinado.pth'
 
 # Lista de classes que o modelo é capaz de identificar.
 # NOTA: A ordem deve ser idêntica à usada no treino (alfabética se usou ImageFolder).
-CLASSES = ['cachorros', 'gatos', 'pessoas'] 
+CLASSES = ['cachorro', 'gato', 'pessoa'] 
 
 # Configuração de dispositivo: Usa GPU (cuda) se disponível, senão usa CPU.
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")

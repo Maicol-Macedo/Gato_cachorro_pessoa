@@ -12,7 +12,7 @@ CAMINHO_MODELO = './modelos/modelo_treinado.pth'
 # Lista de classes que o modelo é capaz de identificar.
 # NOTA: A ordem alfabética é crucial e deve corresponder à ordem usada durante o treinamento
 # (geralmente definida pelo ImageFolder ou similar).
-CLASSES = ['cachorros', 'gatos', 'pessoas'] 
+CLASSES = ['cachorro', 'gato', 'pessoa'] 
 
 def carregar_modelo(device: torch.device) -> models.ResNet:
     """
