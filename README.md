@@ -152,9 +152,19 @@ Edite o arquivo `src/ipcam.py`. Como o Iriun simula uma webcam física, você de
 * **Controles:** Pressione `q` na janela de vídeo para sair com segurança.
 
 ### 4. Classificar Foto (`classificar.py`)
-Para testar uma imagem específica salva no disco.
+Para testar uma imagem específica salva no disco. O script carrega a arquitetura da ResNet50 e os pesos treinados para realizar a inferência estática em uma única imagem, retornando as probabilidades de cada classe no terminal.
+
+**Como executar via linha de comando:**
 
     python src/classificar.py caminho/da/sua_foto.jpg
+
+**Como executar interativamente:**
+Se você rodar o script sem passar um arquivo, ele solicitará o caminho da imagem no terminal:
+
+    python src/classificar.py
+
+* **Pré-processamento:** A imagem é automaticamente redimensionada para 224x224 pixels e suas cores são convertidas de BGR/RGBA para o padrão RGB esperado pela rede.
+* **Saída (Terminal):** O script exibirá o dispositivo em uso (CPU/GPU), a classe com maior probabilidade e a porcentagem detalhada de confiança para cada uma das classes (`cachorro`, `gato` e `pessoa`).
 
 ---
 
